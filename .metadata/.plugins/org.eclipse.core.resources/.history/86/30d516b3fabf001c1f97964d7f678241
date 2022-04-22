@@ -1,0 +1,4 @@
+
+public class PredicateExample implements Predicate<Integer>{
+
+}

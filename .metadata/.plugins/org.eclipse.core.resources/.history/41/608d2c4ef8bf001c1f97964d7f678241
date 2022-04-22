@@ -1,0 +1,10 @@
+
+public class MainMethod {
+
+	public static void main(String[] args) {
+		AdditionImpl addImpl = new AdditionImpl();
+		addImpl.add(5, 5);
+		
+		Addition addImpl1 = new AdditionImpl();
+	}
+}

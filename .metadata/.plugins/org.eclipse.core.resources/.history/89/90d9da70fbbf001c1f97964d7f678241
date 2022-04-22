@@ -1,0 +1,9 @@
+
+public class MainMethod {
+
+	public static void main(String[] args) {
+		PredicateExample ex = new PredicateExample();
+		boolean result = ex.test(6);
+		System.out.println(result);
+	}
+}
