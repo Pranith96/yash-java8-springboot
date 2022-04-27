@@ -7,9 +7,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/hello")
 public class Hello {
-
-	//http://localhost:8080/hello/data
-	//http://localhost:8080/hello/java
 	
 	@GetMapping("/data")
 	public String hi() {
@@ -20,5 +17,7 @@ public class Hello {
 	public String display() {
 		return "Hello Welcome to java";
 	}
+	
+	
 
 }
