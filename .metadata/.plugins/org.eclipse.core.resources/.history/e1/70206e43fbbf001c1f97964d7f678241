@@ -1,8 +1,0 @@
-
-public class MainMethod {
-
-	public static void main(String[] args) {
-		PredicateExample ex = new PredicateExample();
-		ex.test(6);
-	}
-}

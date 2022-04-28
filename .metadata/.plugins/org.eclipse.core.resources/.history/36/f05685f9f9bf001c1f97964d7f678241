@@ -1,4 +1,0 @@
-@FunctionalInterface
-public interface Addition extends PrintData {
-	public void add(int a, int b);
-}

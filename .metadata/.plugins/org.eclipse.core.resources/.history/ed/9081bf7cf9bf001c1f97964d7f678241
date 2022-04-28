@@ -1,4 +1,0 @@
-@FunctionalInterface
-public interface PrintData {
-	public int sum(int a, int b, int c);
-}

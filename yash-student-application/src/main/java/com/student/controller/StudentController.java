@@ -1,8 +1,12 @@
 package com.student.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,4 +27,17 @@ public class StudentController {
 		String response = studentService.saveStudent(student);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
+	
+	@GetMapping("/get/all")
+	public ResponseEntity<List<Student>> getAllStudents(){
+		List<Student> response = studentService.getAllStudentRecords();
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+	
+	@GetMapping("/get/{studentId}")
+	public ResponseEntity<Student> getStudent(@PathVariable("studentId") Integer studentId){
+		Student response = studentService.getStudentData(studentId);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+	
 }

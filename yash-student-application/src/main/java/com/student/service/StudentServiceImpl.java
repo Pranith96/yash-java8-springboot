@@ -1,5 +1,8 @@
 package com.student.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,4 +26,22 @@ public class StudentServiceImpl implements StudentService {
 		return "Data is saved successfully";
 	}
 
+	@Override
+	public List<Student> getAllStudentRecords() {
+		List<Student> response = studentRepository.findAll();
+		if (response == null || response.isEmpty()) {
+			throw new RuntimeException("student records empty");
+		}
+		return response;
+	}
+
+	@Override
+	public Student getStudentData(Integer studentId) {
+		Optional<Student> response = studentRepository.findById(studentId);
+		if(!response.isPresent()) {
+			throw new RuntimeException("id doesnt exists");
+		}
+		return response.get();
+	}
+	
 }
