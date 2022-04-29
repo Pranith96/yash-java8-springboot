@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.student.dto.StudentDto;
 import com.student.entity.Student;
 import com.student.repository.StudentRepository;
 
@@ -38,10 +39,33 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public Student getStudentData(Integer studentId) {
 		Optional<Student> response = studentRepository.findById(studentId);
-		if(!response.isPresent()) {
+		if (!response.isPresent()) {
 			throw new RuntimeException("id doesnt exists");
 		}
 		return response.get();
 	}
-	
+
+	@Override
+	public List<Student> getStudentsByNameDetails(String studentName) {
+		List<Student> response = studentRepository.findByStudentName(studentName);
+		if (response == null || response.isEmpty()) {
+			throw new RuntimeException("student records not found for given name");
+		}
+		return response;
+	}
+
+	@Override
+	public StudentDto getStudentsByLoginIdAndPassword(String loginId, String password) {
+		Optional<Student> response = studentRepository.findByLoginIdAndPassword(loginId, password);
+		if (!response.isPresent()) {
+			throw new RuntimeException("Login id or password Incorrect");
+		}
+		StudentDto dto = new StudentDto();
+		dto.setStudentId(response.get().getStudentId());
+		dto.setStudentName(response.get().getStudentName());
+		dto.setMobileNumber(response.get().getMobileNumber());
+		dto.setEmail(response.get().getEmail());
+		return dto;
+	}
+
 }
