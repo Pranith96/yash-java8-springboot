@@ -47,7 +47,9 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public List<Student> getStudentsByNameDetails(String studentName) {
-		List<Student> response = studentRepository.findByStudentName(studentName);
+		// jpa query
+		// List<Student> response = studentRepository.findByStudentName(studentName);
+		List<Student> response = studentRepository.getByStudentName(studentName);
 		if (response == null || response.isEmpty()) {
 			throw new RuntimeException("student records not found for given name");
 		}
@@ -66,6 +68,14 @@ public class StudentServiceImpl implements StudentService {
 		dto.setMobileNumber(response.get().getMobileNumber());
 		dto.setEmail(response.get().getEmail());
 		return dto;
+	}
+
+	@Override
+	public String deleteStudentData(Integer studentId) {
+		//studentRepository.deleteById(studentId);
+		Student response = getStudentData(studentId);
+		studentRepository.delete(response);
+		return "deleted successfully";
 	}
 
 }

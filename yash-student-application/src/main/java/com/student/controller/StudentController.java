@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -43,7 +44,7 @@ public class StudentController {
 	}
 
 	@GetMapping("/get/name")
-	public ResponseEntity<List<Student>> getStudentsByName(@RequestParam("studetName") String studentName) {
+	public ResponseEntity<List<Student>> getStudentsByName(@RequestParam("studentName") String studentName) {
 		List<Student> response = studentService.getStudentsByNameDetails(studentName);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
@@ -52,6 +53,12 @@ public class StudentController {
 	public ResponseEntity<StudentDto> getStudentsByLoginIdAndPassword(@RequestParam("loginId") String loginId,
 			@RequestParam("password") String password) {
 		StudentDto response = studentService.getStudentsByLoginIdAndPassword(loginId,password);
+		return ResponseEntity.status(HttpStatus.OK).body(response);
+	}
+	
+	@DeleteMapping("/delete/{studentId}")
+	public ResponseEntity<String> deleteStudent(@PathVariable("studentId") Integer studentId) {
+		String response = studentService.deleteStudentData(studentId);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 }
