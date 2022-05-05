@@ -5,12 +5,15 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.student.dto.StudentDto;
 import com.student.entity.Student;
+import com.student.exception.StudentNotFoundException;
 import com.student.repository.StudentRepository;
 
 @Service
+@Transactional
 public class StudentServiceImpl implements StudentService {
 
 	@Autowired
@@ -31,7 +34,7 @@ public class StudentServiceImpl implements StudentService {
 	public List<Student> getAllStudentRecords() {
 		List<Student> response = studentRepository.findAll();
 		if (response == null || response.isEmpty()) {
-			throw new RuntimeException("student records empty");
+			throw new StudentNotFoundException("student records empty");
 		}
 		return response;
 	}
@@ -40,7 +43,7 @@ public class StudentServiceImpl implements StudentService {
 	public Student getStudentData(Integer studentId) {
 		Optional<Student> response = studentRepository.findById(studentId);
 		if (!response.isPresent()) {
-			throw new RuntimeException("id doesnt exists");
+			throw new StudentNotFoundException("id doesnt exists");
 		}
 		return response.get();
 	}
@@ -51,7 +54,7 @@ public class StudentServiceImpl implements StudentService {
 		// List<Student> response = studentRepository.findByStudentName(studentName);
 		List<Student> response = studentRepository.getByStudentName(studentName);
 		if (response == null || response.isEmpty()) {
-			throw new RuntimeException("student records not found for given name");
+			throw new StudentNotFoundException("student records not found for given name");
 		}
 		return response;
 	}
@@ -72,10 +75,17 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public String deleteStudentData(Integer studentId) {
-		//studentRepository.deleteById(studentId);
+		// studentRepository.deleteById(studentId);
 		Student response = getStudentData(studentId);
 		studentRepository.delete(response);
 		return "deleted successfully";
+	}
+
+	@Transactional
+	@Override
+	public String updateName(String studentName, Integer studentId) {
+		studentRepository.updateStudentName(studentName, studentId);
+		return "updated successfully";
 	}
 
 }
