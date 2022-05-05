@@ -19,6 +19,8 @@ import com.student.dto.StudentDto;
 import com.student.entity.Student;
 import com.student.service.StudentService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping("/student")
 public class StudentController {
@@ -27,18 +29,21 @@ public class StudentController {
 	StudentService studentService;
 
 	@PostMapping("/save")
+	@ApiOperation(value = "Student account Creation API", notes = "Please provide all the info for Student account creation", response = Student.class)
 	public ResponseEntity<String> createStudent(@RequestBody Student student) {
 		String response = studentService.saveStudent(student);
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
 	@GetMapping("/get/all")
+	@ApiOperation(value = "Get All Student Details API", notes = "Fetch all student records", response = Student.class)
 	public ResponseEntity<List<Student>> getAllStudents() {
 		List<Student> response = studentService.getAllStudentRecords();
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 
 	@GetMapping("/get/{studentId}")
+	@ApiOperation(value = "Get Student record by studentId", notes = "fetch Student record by studentId", response = Student.class)
 	public ResponseEntity<Student> getStudent(@PathVariable("studentId") Integer studentId) {
 		Student response = studentService.getStudentData(studentId);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
@@ -53,19 +58,20 @@ public class StudentController {
 	@GetMapping("/get/login")
 	public ResponseEntity<StudentDto> getStudentsByLoginIdAndPassword(@RequestParam("loginId") String loginId,
 			@RequestParam("password") String password) {
-		StudentDto response = studentService.getStudentsByLoginIdAndPassword(loginId,password);
+		StudentDto response = studentService.getStudentsByLoginIdAndPassword(loginId, password);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
-	
+
 	@DeleteMapping("/delete/{studentId}")
 	public ResponseEntity<String> deleteStudent(@PathVariable("studentId") Integer studentId) {
 		String response = studentService.deleteStudentData(studentId);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
-	
+
 	@PutMapping("/update/{studentName}/{studentId}")
-	public ResponseEntity<String> updateStudentName(@PathVariable("studentName") String studentName, @PathVariable("studentId") Integer studentId){
-		String response = studentService.updateName(studentName,studentId);
+	public ResponseEntity<String> updateStudentName(@PathVariable("studentName") String studentName,
+			@PathVariable("studentId") Integer studentId) {
+		String response = studentService.updateName(studentName, studentId);
 		return ResponseEntity.status(HttpStatus.OK).body(response);
 	}
 }
