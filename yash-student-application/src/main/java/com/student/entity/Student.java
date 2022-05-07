@@ -1,10 +1,14 @@
 package com.student.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import io.swagger.annotations.ApiModel;
@@ -34,6 +38,30 @@ public class Student {
 	@Column(name = "password")
 	@ApiModelProperty(notes = "The Student password")
 	private String password;
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "address_id")
+	private Address address;
+
+	@ManyToOne(cascade = CascadeType.ALL, targetEntity = College.class)
+	@JoinColumn(name = "college_id")
+	private College college;
+
+	public College getCollege() {
+		return college;
+	}
+
+	public void setCollege(College college) {
+		this.college = college;
+	}
+
+	public Address getAddress() {
+		return address;
+	}
+
+	public void setAddress(Address address) {
+		this.address = address;
+	}
 
 	public Student(Integer studentId, String studentName, String mobileNumber, String email, String loginId,
 			String password) {
